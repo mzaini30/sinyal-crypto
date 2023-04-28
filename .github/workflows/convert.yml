@@ -18,12 +18,12 @@ jobs:
         with:
           node-version: "14"
           cache: "pnpm"
+
+      - name: Convert data.yml to data.json
         run: |
           pnpm install
           pnpm install -g yamljs
-
-      - name: Convert data.yml to data.json
-        run: pnpm run build
+          pnpm run build
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
