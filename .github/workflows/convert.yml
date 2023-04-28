@@ -13,17 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js and pnpm
+      - name: Setup Node.js and npm
         uses: actions/setup-node@v2
         with:
           node-version: "14"
-          cache: "pnpm"
 
       - name: Convert data.yml to data.json
         run: |
-          pnpm install
-          pnpm install -g yamljs
-          pnpm run build
+          npm install
+          npm install -g yamljs
+          npm run build
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
