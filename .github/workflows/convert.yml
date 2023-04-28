@@ -1,0 +1,32 @@
+name: Build Data JSON
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js and pnpm
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "pnpm"
+        run: |
+          pnpm install
+          pnpm install -g yamljs
+
+      - name: Convert data.yml to data.json
+        run: pnpm run build
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          publish_dir: ./dist
